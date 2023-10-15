@@ -8,8 +8,12 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.SwerveModule;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -19,8 +23,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+
+  public static Joystick driveStick;
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+
+  private final SwerveModule swerveModule = new SwerveModule();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -28,6 +36,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    driveStick = new Joystick(0);
     // Configure the trigger bindings
     configureBindings();
   }
@@ -46,9 +56,23 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
+    new JoystickButton(driveStick, 11)
+        .whileTrue(new InstantCommand(swerveModule::startDriveMotor))
+        .whileFalse(new InstantCommand(swerveModule::stopDriveMotor));
+
+    new JoystickButton(driveStick, 12)
+        .whileTrue(new InstantCommand(swerveModule::startAngleMotor))
+        .whileFalse(new InstantCommand(swerveModule::stopAngleMotor));
+    
+    new JoystickButton(driveStick, 9)
+        .whileTrue(new InstantCommand(swerveModule::goToAngle))
+        .whileFalse(new InstantCommand(swerveModule::stopAngleMotor));
+
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
+
   }
 
   /**
