@@ -73,7 +73,7 @@ public class NeoBranchSubsystem extends SubsystemBase {
 
     // sets which shooterMotorLeft is the leader and follower; set follower inversion if needed
     
-    shooterMotorRight.follow(shooterMotorLeft,true);
+   // shooterMotorRight.follow(shooterMotorLeft,true);
     
     shooterMotorLeader = shooterMotorLeft;
     
