@@ -79,6 +79,9 @@ public class RobotContainer {
     new JoystickButton(joystick, 2)
         .whileTrue(new InstantCommand(()->RobotContainer.neoBranchSubsystem.runRightMotorWithPower(-0.2), RobotContainer.neoBranchSubsystem))
         .onFalse(new InstantCommand(RobotContainer.neoBranchSubsystem::stopMotorRight, RobotContainer.neoBranchSubsystem));
+    new JoystickButton(joystick, 7)
+        .whileTrue(new InstantCommand(()->RobotContainer.neoBranchSubsystem.runBothMotorWithPowerNoFollower(-0.3), RobotContainer.neoBranchSubsystem))
+        .onFalse(new InstantCommand(RobotContainer.neoBranchSubsystem::stopBothMotorWithPowerNoFollower, RobotContainer.neoBranchSubsystem));
   }
 
   /**

@@ -163,7 +163,10 @@ public class NeoBranchSubsystem extends SubsystemBase {
     shooterMotorRight.set(power);
   }
 
-
+  public void runBothMotorWithPowerNoFollower(double power) {
+    shooterMotorLeft.set(power);
+    shooterMotorRight.set(power);
+  }
   /**
    * Run shooter with PID power -1..1; converts power to voltage
    * @param power
@@ -198,6 +201,10 @@ public class NeoBranchSubsystem extends SubsystemBase {
     shooterMotorRight.set(0);
   }
 
+  public void stopBothMotorWithPowerNoFollower() {
+    shooterMotorLeft.set(0);
+    shooterMotorRight.set(0);
+  }
   // ===============================
   // ===== Shooter telemetry methods
   // ===============================
