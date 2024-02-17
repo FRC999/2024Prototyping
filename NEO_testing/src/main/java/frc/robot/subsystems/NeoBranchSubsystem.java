@@ -141,6 +141,71 @@ public class NeoBranchSubsystem extends SubsystemBase {
   }
 
   // ===============================
+  // ===== Shooter Individual Testing
+  // ===============================\
+
+  public void runLeftMotorWithVelocity(double speed) {
+    shooterMotorLeft.getPIDController().setReference((speed), ControlType.kVelocity);
+  }
+
+  public void runRightMotorWithVelocity(double speed) {
+    shooterMotorRight.getPIDController().setReference((speed), ControlType.kVelocity);
+  }
+  /**
+   * Run shooter with NON-PID power -1..1
+   * @param power
+   */
+  public void runLeftMotorWithPower(double power) {
+    shooterMotorLeft.set(power);
+  }
+
+  public void runRightMotorWithPower(double power) {
+    shooterMotorRight.set(power);
+  }
+
+  public void runBothMotorWithPowerNoFollower(double power) {
+    shooterMotorLeft.set(power);
+    shooterMotorRight.set(power);
+  }
+  /**
+   * Run shooter with PID power -1..1; converts power to voltage
+   * @param power
+   */
+  public void runLeftWithPowerPID(double power) {
+    runLeftMotorWithVoltagePID(MathUtil.clamp (power * 12.0, -12.0, 12.0));
+  }
+
+  public void runRightWithPowerPID(double power) {
+    runRightMotorWithVoltagePID(MathUtil.clamp (power * 12.0, -12.0, 12.0));
+  }
+
+  /**
+   * Run shooter with PID voltage; clamp voltage to nominal range
+   * @param voltage
+   */
+  public void runLeftMotorWithVoltagePID(double voltage) {
+    shooterMotorLeft.getPIDController().setReference(MathUtil.clamp (voltage, -12.0, 12.0), ControlType.kVoltage);
+  }
+
+  public void runRightMotorWithVoltagePID(double voltage) {
+    shooterMotorRight.getPIDController().setReference(MathUtil.clamp (voltage, -12.0, 12.0), ControlType.kVoltage);
+  }
+
+  public void stopMotorLeft() {
+    //shooterMotorLeader.getPIDController().setReference((0), ControlType.kVelocity);
+    shooterMotorLeft.set(0);
+  }
+
+  public void stopMotorRight() {
+    //shooterMotorLeader.getPIDController().setReference((0), ControlType.kVelocity);
+    shooterMotorRight.set(0);
+  }
+
+  public void stopBothMotorWithPowerNoFollower() {
+    shooterMotorLeft.set(0);
+    shooterMotorRight.set(0);
+  }
+  // ===============================
   // ===== Shooter telemetry methods
   // ===============================
 
